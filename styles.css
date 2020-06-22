@@ -1,0 +1,21 @@
+
+/* Colour palette 
+    #7262B3 Blue Violet
+    #9194C6 Blue Bell
+    #FBFBFB White
+    #CF98B6 Kobi
+    #B5D8C2 Turquoise Green
+*/
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: normal;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    background: linear-gradient(to right, #7262B3, #CF98B6);
+    
+}
