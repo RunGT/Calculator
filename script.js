@@ -9,7 +9,7 @@ class Calculator {
     clear(){
         this.previousOperand = '';
         this.currentOperand = '';
-        this.operation = undefined;
+        this.operation = '';
 
     }
 
@@ -68,9 +68,12 @@ class Calculator {
     }
 
     updateDisplay() {
+        // Displays text in the previous-operand div that is equal to currentOperand 
         this.currentOperandTextElement.innerText = this.currentOperand;
-        // Displays text in the previous-operand div that is equal to previousOperand 
-        this.previousOperandTextElement.innerText = this.previousOperand;
+        if (this.operation != null){
+        // Displays a concatenation of previous operand and the operation symbol
+        this.previousOperandTextElement.innerText = `${this.previousOperand} ${this.operation}`;
+    }
     }
 }
 
