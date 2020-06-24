@@ -25,14 +25,43 @@ class Calculator {
     }
 
     chooseOperation(operation) {
+        if (this.currentOperand === '') return;
+        // This will compute the equation berofe appling another operation such as +, etc
+        if (this.currentOperand !== ''){
+            this.compute()
+        }
         this.operation = operation;
         this.previousOperand = this.currentOperand;
         this.currentOperand = ''
 
     }
 
-    compute() {   
-
+    compute() {
+        let computation;
+        // parseFloat() converts the string into a number, until it reaches a value that is not a number
+        const prev = parseFloat(this.previousOperand);   
+        const current = parseFloat(this.currentOperand);
+        if (isNaN(prev) || isNaN(current)) return;
+        switch (this.operation) {
+            case '+':
+                computation = prev + current;
+                break;
+                case '-':
+                    computation = prev - current;
+                    break;
+                    case 'x':
+                computation = prev * current;
+                break;
+                case '÷':
+                computation = prev / current;
+                break;
+                default:
+                    return;
+                
+        }
+        this.currentOperand = computation;
+        this.operation = undefined;
+        this.previousOperand = '';
     }
 
     updateDisplay() {
@@ -68,6 +97,16 @@ operationButtons.forEach(button => {
         calculator.chooseOperation(button.innerText)
         calculator.updateDisplay()
     })
+})
+
+equalsButton.addEventListener('click', button => {
+    calculator.compute();
+    calculator.updateDisplay();
+})
+
+allClearButton.addEventListener('click', button => {
+    calculator.clear();
+    calculator.updateDisplay();
 })
 
 
