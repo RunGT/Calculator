@@ -14,8 +14,11 @@ class Calculator {
     }
 
     delete(){
+        this.currentOperand = this.currentOperand.slice(0, -1)
+        
+        }
 
-    }
+    
 
     appendNumber(number) {
         // Coverting the numbers to a string as JS will try to add the numbers together instead of appending ie putting onto the end
@@ -106,6 +109,11 @@ equalsButton.addEventListener('click', button => {
 
 allClearButton.addEventListener('click', button => {
     calculator.clear();
+    calculator.updateDisplay();
+})
+
+deleteButton.addEventListener('click', button => {
+    calculator.delete();
     calculator.updateDisplay();
 })
 
