@@ -21,8 +21,9 @@ class Calculator {
     
 
     appendNumber(number) {
-        // Coverting the numbers to a string as JS will try to add the numbers together instead of appending ie putting onto the end
+        // If there is a '.' in the number and the currentOperand already contains a '.', end the function by returning. I.E do not append a '.'
         if (number === '.' && this.currentOperand.includes('.')) return;
+        // Coverting the numbers to a string as JS will try to add the numbers together instead of appending ie putting onto the end
         this.currentOperand = this.currentOperand.toString() + number.toString();
 
     }
