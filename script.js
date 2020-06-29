@@ -8,7 +8,7 @@ class Calculator {
 
     clear(){
         this.previousOperand = '';
-        this.currentOperand = '';
+        this.currentOperand = '0';
         this.operation = '';
 
     }
@@ -21,6 +21,9 @@ class Calculator {
     
 
     appendNumber(number) {
+        // Makes sure the currentOperand displays 0 but clears the 0 when a new number is inputted
+        if (this.currentOperand === "0")
+        this.currentOperand = "";
         // If there is a '.' in the number and the currentOperand already contains a '.', end the function by returning. I.E do not append a '.'
         if (number === '.' && this.currentOperand.includes('.')) return;
         // Coverting the numbers to a string as JS will try to add the numbers together instead of appending ie putting onto the end
@@ -72,6 +75,8 @@ class Calculator {
     updateDisplay() {
         // Displays text in the previous-operand div that is equal to currentOperand 
         this.currentOperandTextElement.innerText = this.currentOperand;
+        if (this.currentOperand === '0') 
+        this.currentOperand = '';
         if (this.operation != null){
         // Displays a concatenation of previous operand and the operation symbol
         this.previousOperandTextElement.innerText = `${this.previousOperand} ${this.operation}`;
