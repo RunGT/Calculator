@@ -14,7 +14,7 @@ class Calculator {
     }
 
     delete(){
-        this.currentOperand = this.currentOperand.slice(0, -1)
+        this.currentOperand = this.currentOperand.slice(0, -1);
         
         }
 
@@ -42,10 +42,11 @@ class Calculator {
 
     compute() {
         let computation;
-        // parseFloat() converts the string into a number, until it reaches a value that is not a number
+        // parseFloat() converts the string into a number, until it reaches a input that is not a number
         const prev = parseFloat(this.previousOperand);   
         const current = parseFloat(this.currentOperand);
         if (isNaN(prev) || isNaN(current)) return;
+        // Switch statement for the calculation programming
         switch (this.operation) {
             case '+':
                 computation = prev + current;
