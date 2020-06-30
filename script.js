@@ -2,6 +2,8 @@ class Calculator {
     constructor( previousOperandTextElement, currentOperandTextElement){
         this.previousOperandTextElement = previousOperandTextElement;
         this.currentOperandTextElement = currentOperandTextElement;
+        //Flag variable
+        this.readyToReset = false;
         // Call the clear function to start with a clear display
         this.clear();
     }
@@ -15,6 +17,10 @@ class Calculator {
 
     delete(){
         this.currentOperand = this.currentOperand.slice(0, -1);
+        // Ensures 0 is shown once all numbers have been deleted
+        if (this.currentOperand === ''){
+            this.currentOperand = '0';
+        }
         
         }
 
@@ -22,8 +28,14 @@ class Calculator {
 
     appendNumber(number) {
         // Makes sure the currentOperand displays 0 but clears the 0 when a new number is inputted
-        if (this.currentOperand === "0")
-        this.currentOperand = "";
+        if (this.currentOperand === '0') {
+        this.currentOperand = '';
+        }
+        // As above but returns to 0 once a calculation has been made. Could be more efficient to work on a funtion that resets the calculator.
+        // NB the code below creates a bug where it will only allow you to type a single number
+        //if (this.previousOperand !== '' && this.current !== '')
+        //this.currentOperand = '';
+        
         // If there is a '.' in the number and the currentOperand already contains a '.', end the function by returning. I.E do not append a '.'
         if (number === '.' && this.currentOperand.includes('.')) return;
         // Coverting the numbers to a string as JS will try to add the numbers together instead of appending ie putting onto the end
@@ -33,7 +45,7 @@ class Calculator {
 
     chooseOperation(operation) {
         if (this.currentOperand === '') return;
-        // This will compute the equation berofe appling another operation such as +, etc
+        // This will compute the equation berofe applying another operation such as +, etc
         if (this.currentOperand !== ''){
             this.compute()
         }
@@ -67,6 +79,7 @@ class Calculator {
                     return;
                 
         }
+        this.readyToReset = true;
         this.currentOperand = computation;
         this.operation = undefined;
         this.previousOperand = '';
@@ -75,8 +88,9 @@ class Calculator {
     updateDisplay() {
         // Displays text in the previous-operand div that is equal to currentOperand 
         this.currentOperandTextElement.innerText = this.currentOperand;
-        if (this.currentOperand === '0') 
+        if (this.currentOperand === '0'){
         this.currentOperand = '';
+        }
         if (this.operation != null){
         // Displays a concatenation of previous operand and the operation symbol
         this.previousOperandTextElement.innerText = `${this.previousOperand} ${this.operation}`;
@@ -86,6 +100,9 @@ class Calculator {
 
 
 // Data attribute needs to be inside []
+//Links JS to the html elements e.g buttons, display etc and renames them as a new variable
+//Const can not be reassigned 
+
 const numberButtons = document.querySelectorAll('[data-number]');
 const operationButtons = document.querySelectorAll('[data-operation]');
 const deleteButton = document.querySelector('[data-delete]');
@@ -100,10 +117,18 @@ const calculator = new Calculator(previousOperandTextElement, currentOperandText
 
 numberButtons.forEach(button => {
     button.addEventListener('click', () => {
+        //Flag variable used to fix bug. This allows the calculator to be reset after a calculation
+        if(calculator.previousOperand === "" &&
+        calculator.currentOperand !== "" &&
+    calculator.readyToReset) {
+            calculator.currentOperand = "";
+            calculator.readyToReset = false;
+        }
         calculator.appendNumber(button.innerText)
         calculator.updateDisplay()
     })
 })
+
 
 operationButtons.forEach(button => {
     button.addEventListener('click', () => {
@@ -126,5 +151,7 @@ deleteButton.addEventListener('click', button => {
     calculator.delete();
     calculator.updateDisplay();
 })
+
+
 
 
